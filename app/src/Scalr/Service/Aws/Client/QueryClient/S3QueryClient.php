@@ -170,10 +170,17 @@ class S3QueryClient extends QueryClient
 
         $httpRequest->setUrl($scheme . '://' . $options['Host'] . $path);
         $httpRequest->setMethod(constant('HTTP_METH_' . $httpMethod));
+
+        $container = \Scalr::getContainer();
+
         $httpRequest->setOptions(array(
             'redirect'  => 10,
-            'useragent' => 'Scalr AWS Client (http://scalr.com)'
+            'useragent' => 'Scalr AWS Client (http://scalr.com)',
+            'proxyhost' => $container->config('scalr.aws.clients.proxy.host'),
+            'proxyport' => intval($container->config('scalr.aws.clients.proxy.port')),
+            'proxyauth' => $container->config('scalr.aws.clients.proxy.user') . ':' . $container->config('scalr.aws.clients.proxy.pass'),
         ));
+
         $httpRequest->addHeaders($options);
 
         $response = $this->tryCall($httpRequest);

@@ -149,7 +149,13 @@ scalr:
     ip_pool: ['8.8.8.8'] 
     # Default value: 'scalr.'
     security_group_prefix: 'scalr.'
-    
+#    # Proxy settings are optional.
+#    clients:
+#      proxy:
+#        host: 'localhost'
+#        port: ~
+#        user: 'scalr'
+#        pass: 'scalr'
 #    # AWS Client plugins is not mandatory part of the Scalr
 #    plugins:
 #      # List of the enabled plug-ins. All plug-ins are disabled by default.

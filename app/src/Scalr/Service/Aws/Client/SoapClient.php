@@ -132,12 +132,20 @@ class SoapClient extends \SoapClient implements ClientInterface
         $this->setApiVersion($apiVersion);
         $this->setUrl($url);
         $this->wsdl = $wsdl;
+
+        $container = \Scalr::getContainer();
+
         parent::__construct($this->wsdl, array(
             'connection_timeout' => self::CONNECTION_TIMEOUT,
             'trace'              => true,
             'exceptions'         => false,
-            'user_agent'         => 'Scalr AWS Soap Client (http://scalr.com)'
+            'user_agent'         => 'Scalr AWS Soap Client (http://scalr.com)',
+            'proxy_host'         => $container->config('scalr.aws.clients.proxy.host'),
+            'proxy_port'         => intval($container->config('scalr.aws.clients.proxy.port')),
+            'proxy_login'        => $container->config('scalr.aws.clients.proxy.user'),
+            'proxy_password'     => $container->config('scalr.aws.clients.proxy.pass'),
         ));
+        
         if (substr($url, -1) != '/') {
             $url = $url . "/";
         }
